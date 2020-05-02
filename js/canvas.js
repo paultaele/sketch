@@ -51,6 +51,34 @@ function onMouseUp(event) {
     stroke.add(firstPoint + [0, PATH_STYLE.strokeWidth]);
 }
 
+globals.resizeCanvas = () => {
+
+    // clear canvas
+    globals.clearCanvas();
+
+    // obtain the dimensionsfrom the respective text boxes
+    let widthInput = document.getElementById("widthInput").value;
+    let heightInput = document.getElementById("heightInput").value;
+
+    // parse the dimensions into numerical values
+    let width = Number.parseInt(widthInput);
+    let height = Number.parseInt(heightInput);
+
+    // validate the entered dimension values 
+    if (Number.isNaN(width) || typeof width !== 'number' || width === 0) {
+        alert("ERROR: Missing valid width size.");
+        return;
+    }
+    if (Number.isNaN(height) || typeof height !== 'number' || height === 0) {
+        alert("ERROR: Missing valid height size.");
+        return;
+    }
+
+    // update the draw canvas' dimensions
+    document.getElementById("myCanvas").width = width;
+    document.getElementById("myCanvas").height = height;
+}
+
 globals.clearCanvas = () => {
     
     // - clear all strokes
@@ -86,7 +114,7 @@ globals.undoCanvas = () => {
     project.activeLayer.lastChild.remove();
 }
 
-globals.nextCanvas = () => {
+globals.submitCanvas = () => {
 
     // skip if no strokes
     if (strokes.length === 0) { return; }
@@ -148,19 +176,25 @@ globals.nextCanvas = () => {
     globals.clearCanvas();
 }
 
-//TODO
 globals.saveCanvas = () => {
 
-    // skip if there are strokes on the canvas
-    if (strokes.length !== 0) { return; }
+    // handle warning/error cases
+    if (strokes.length !== 0) {
+
+        alert("WARNING: Clear or submit input before saving.");
+        return;
+    }
+    if (sketches.length === 0) {
+
+        alert("ERROR: There are no saved input to save.");
+        return;
+    }
 
     // download the JSON data
     let data = JSON.stringify(sketches);
     download("data.json", data);
 
     // clear sketches
-
-    // debug
     sketches = [];
 }
 

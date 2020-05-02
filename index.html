@@ -8,22 +8,34 @@
 	<script type="text/paperscript" src="js/canvas.js" canvas="myCanvas"></script>
 	<style>
 		.center { text-align: center }
-		button.icon { font-size: 20px }
+		.label { font-size: 20px }
 	</style>
 </head>
 
 <body>
 	<div class="center">
+
+		<div class="label">
+			Width: <input type="text" id="widthInput" class="label" name="widthInput" maxlength="6" size="6">
+			Height: <input type="text" id="heightInput" class="label" name="heightInput" maxlength="6" size="6">
+			<button id="resizeButton" class="label">Resize</button>
+		</div>
+
+		<br><br>
+
 		<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
 
 		<br><br>
 
-		<button id="clearButton" class="icon">Clear</button>
-		<button id="undoButton" class="icon">Undo</button>
-		<button id="nextButton" class="icon">Next</button>
-		<br><br>
-		<button id="saveButton" class="icon">Save</button>
-		<button id="debugButton" class="icon">Debug</button>
+		<div>
+			<button id="clearButton" class="label">Clear</button>
+			<button id="undoButton" class="label">Undo</button>
+			<button id="submitButton" class="label">Submit</button>
+			<br><br>
+			<button id="saveButton" class="label">Save</button>
+			<button id="debugButton" class="label">Debug</button>
+		</div>
+		
 	</div>
 	
 </body>
