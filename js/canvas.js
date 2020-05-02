@@ -151,9 +151,15 @@ globals.nextCanvas = () => {
 //TODO
 globals.downloadCanvas = () => {
 
+    //TODO: only download if canvas is clear
+    // reason: current non-empty sketch may not be saved yet
+    console.log();
+
     let data = JSON.stringify(sketches);
 
     download("data.json", data);
+
+    //TODO: clear sketches after downloading
 }
 
 globals.debugCanvas = () => {

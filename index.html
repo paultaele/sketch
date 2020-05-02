@@ -6,21 +6,26 @@
 	<script type="text/javascript" src="https://unpkg.com/paper"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/paperscript" src="js/canvas.js" canvas="myCanvas"></script>
+	<style>
+		.center { text-align: center }
+		button.icon { font-size: 20px }
+	</style>
 </head>
 
 <body>
-	<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
+	<div class="center">
+		<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
 
-	<br>
+		<br><br>
 
-	
-	<button id="clearButton">Clear</button>
-	<button id="undoButton">Undo</button>
-	<br><br>
-	<button id="nextButton">Next</button>
-	<button id="downloadButton">Download</button>
-	<br><br>
-	<button id="debugButton">Debug</button>
+		<button id="clearButton" class="icon">Clear</button>
+		<button id="undoButton" class="icon">Undo</button>
+		<br><br>
+		<button id="nextButton" class="icon">Next</button>
+		<button id="downloadButton" class="icon">Download</button>
+		<br><br>
+		<button id="debugButton" class="icon">Debug</button>
+	</div>
 	
 </body>
 
