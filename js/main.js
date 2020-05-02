@@ -7,7 +7,7 @@ window.onload = function() {
     document.getElementById("clearButton").onclick = onClickClear;
     document.getElementById("undoButton").onclick = onClickUndo;
     document.getElementById("nextButton").onclick = onClickNext;
-    document.getElementById("downloadButton").onclick = onClickDownload;
+    document.getElementById("saveButton").onclick = onClickSave;
     document.getElementById("debugButton").onclick = onClickDebug;
 
     function onClickClear() {
@@ -25,9 +25,9 @@ window.onload = function() {
         window.globals.nextCanvas();
     }
 
-    function onClickDownload() {
+    function onClickSave() {
 
-        window.globals.downloadCanvas();
+        window.globals.saveCanvas();
     }
     
     function onClickDebug() {

@@ -149,17 +149,19 @@ globals.nextCanvas = () => {
 }
 
 //TODO
-globals.downloadCanvas = () => {
+globals.saveCanvas = () => {
 
-    //TODO: only download if canvas is clear
-    // reason: current non-empty sketch may not be saved yet
-    console.log();
+    // skip if there are strokes on the canvas
+    if (strokes.length !== 0) { return; }
 
+    // download the JSON data
     let data = JSON.stringify(sketches);
-
     download("data.json", data);
 
-    //TODO: clear sketches after downloading
+    // clear sketches
+
+    // debug
+    sketches = [];
 }
 
 globals.debugCanvas = () => {
@@ -178,20 +180,20 @@ function generateUuidv4() {
 
 function download(file, text) { 
   
-    //creating an invisible element 
+    // create an invisible element 
+    // note: equivalent to
+    // <a href="path of file" download="file name"> 
     let element = document.createElement('a'); 
-    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' 
-                         + encodeURIComponent(text)); 
+    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(text)); 
     element.setAttribute('download', file); 
 
-    //the above code is equivalent to 
-    // <a href="path of file" download="file name"> 
-
+    // include element into document
     document.body.appendChild(element); 
 
-    //onClick property 
+    // add onClick property 
     element.click(); 
 
+    // remove element from body
     document.body.removeChild(element); 
 } 
 
