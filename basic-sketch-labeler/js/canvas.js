@@ -49,14 +49,9 @@ function drawStrokes(sketch) {
     // clear all strokes from canvas
     project.activeLayer.removeChildren();
 
-    //
-    console.log(`${sketch.canvasHeight} x ${sketch.canvasHeight}`);
-
     // resize canvas to sketch 
-    let borderSize = getComputedStyle(document.getElementById("myCanvas"), null).getPropertyValue('border-left-width');
-    borderSize = parseInt(borderSize.slice(0, borderSize.length - 2));
-    document.getElementById("myCanvas").width = sketch.canvasWidth - borderSize;
-    document.getElementById("myCanvas").height = sketch.canvasHeight - borderSize;
+    document.getElementById("myCanvas").width = sketch.canvasWidth;
+    document.getElementById("myCanvas").height = sketch.canvasHeight;
 
     // iterate through each sketch stroke
     for (let i = 0; i < sketch.strokes.length; ++i) {
@@ -68,7 +63,7 @@ function drawStrokes(sketch) {
         let stroke = new Path();
         stroke.style = PATH_STYLE;
 
-        //
+        // add stroke to canvas
         for (let j = 0; j < sketchStroke.points.length; ++j) {
             let point = sketchStroke.points[j];
             stroke.add([point.x, point.y]);
