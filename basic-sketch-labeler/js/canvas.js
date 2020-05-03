@@ -49,6 +49,15 @@ function drawStrokes(sketch) {
     // clear all strokes from canvas
     project.activeLayer.removeChildren();
 
+    //
+    console.log(`${sketch.canvasHeight} x ${sketch.canvasHeight}`);
+
+    // resize canvas to sketch 
+    let borderSize = getComputedStyle(document.getElementById("myCanvas"), null).getPropertyValue('border-left-width');
+    borderSize = parseInt(borderSize.slice(0, borderSize.length - 2));
+    document.getElementById("myCanvas").width = sketch.canvasWidth - borderSize;
+    document.getElementById("myCanvas").height = sketch.canvasHeight - borderSize;
+
     // iterate through each sketch stroke
     for (let i = 0; i < sketch.strokes.length; ++i) {
 

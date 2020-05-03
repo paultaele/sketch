@@ -74,9 +74,10 @@ globals.resizeCanvas = () => {
         return;
     }
 
-    // update the draw canvas' dimensions
+    // update the canvas and active layer dimensions
     document.getElementById("myCanvas").width = width;
     document.getElementById("myCanvas").height = height;
+    project.activeLayer.view.viewSize = new Size(width, height);
 };
 
 globals.clearCanvas = () => {
@@ -161,6 +162,10 @@ globals.submitCanvas = () => {
     shape.interpretation = EMPTY_VALUE;
     shape.confidence = DEFAULT_CONFIDENCE;
 
+    // get canvas width and height
+    let canvasWidth = document.getElementById("myCanvas").width;
+    let canvasHeight = document.getElementById("myCanvas").height;
+    
     // set the sketch's id, time, domain, strokes, and shape
     sketch.id = generateUuidv4();
     sketch.time = firstTime;

@@ -11,9 +11,7 @@ window.onload = () => {
 }
 
 function loadFiles(event) {
-
-    //TODO: disable all buttons
-
+    
     // get file from upload button
     let file = event.target.files[0];
 
@@ -32,8 +30,6 @@ function loadFiles(event) {
         let input = document.getElementById("uploadButton");
         input.value = "";
     };
-    
-    //TODO: enable all buttons
 }
 
 function onClickNext()    { window.globals.nextCanvas(); }
