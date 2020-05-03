@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Basic Sketch Labeler</title>
+	<script type="text/javascript" src="https://unpkg.com/acorn"></script>
+	<script type="text/javascript" src="https://unpkg.com/paper"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/paperscript" src="js/canvas.js" canvas="myCanvas"></script>
+	<style>
+		.center { text-align: center }
+		.label { font-size: 20px }
+	</style>
+</head>
+
+<body>
+	<a href="../">&lt;&lt; Back to Home</a>
+
+	<br><br>
+
+	<div class="center">
+
+		<h1>Basic Sketch Labeler</h1>
+
+		<div>
+			<form method="post" enctype="multipart/form-data">
+				<label for="file">Choose file(s) to upload</label>
+				<input type="file" id="uploadButton" accept=".json">
+			</form>
+		</div>
+
+		<br>
+
+		<div>
+			<button id="backButton" class="label" disabled>Back</button>
+			<button id="nextButton" class="label" disabled>Next</button>
+		</div>
+
+		<br>
+
+		<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
+		
+	</div>
+	
+</body>
+
+</html>

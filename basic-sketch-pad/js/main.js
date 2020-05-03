@@ -2,7 +2,7 @@ window.globals = {
     
 };
 
-window.onload = function() {
+window.onload = () => {
 
     document.getElementById("resizeButton").onclick = onClickResize;
     document.getElementById("clearButton").onclick = onClickClear;
