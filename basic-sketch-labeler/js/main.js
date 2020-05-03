@@ -5,9 +5,9 @@ window.globals = {
 
 window.onload = () => {
 
-    // load files at file input
-    let input = document.getElementById("uploadButton");
-    input.addEventListener('change', loadFiles);
+    document.getElementById("uploadButton").addEventListener('change', loadFiles);
+    document.getElementById("backButton").onclick = onClickBack;
+    document.getElementById("nextButton").onclick = onClickNext;
 }
 
 function loadFiles(event) {
@@ -18,23 +18,23 @@ function loadFiles(event) {
     let file = event.target.files[0];
 
     // collect the sketches from the file(s)
-    // let sketches = [];
     let reader = new FileReader();
+    reader.readAsText(file);
     reader.onload = (e) => {
 
         // get sketches from file
         let sketches = JSON.parse(e.target.result);
 
-        // TODO
-
-        // debug
-        window.globals.test(sketches);
+        // load sketches
+        window.globals.loadCanvas(sketches);
 
         // reset upload button's value
         let input = document.getElementById("uploadButton");
         input.value = "";
     };
-    reader.readAsText(file);
-
+    
     //TODO: enable all buttons
 }
+
+function onClickNext()    { window.globals.nextCanvas(); }
+function onClickBack()    { window.globals.backCanvas(); }

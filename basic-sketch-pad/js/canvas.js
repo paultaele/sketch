@@ -77,7 +77,7 @@ globals.resizeCanvas = () => {
     // update the draw canvas' dimensions
     document.getElementById("myCanvas").width = width;
     document.getElementById("myCanvas").height = height;
-}
+};
 
 globals.clearCanvas = () => {
     
@@ -93,7 +93,7 @@ globals.clearCanvas = () => {
 
     // clear all strokes from canvas
     project.activeLayer.removeChildren();
-}
+};
 
 globals.undoCanvas = () => {
 
@@ -112,7 +112,7 @@ globals.undoCanvas = () => {
     
     // - undo latest stroke from canvas
     project.activeLayer.lastChild.remove();
-}
+};
 
 globals.submitCanvas = () => {
 
@@ -174,7 +174,7 @@ globals.submitCanvas = () => {
 
     // clear canvas
     globals.clearCanvas();
-}
+};
 
 globals.saveCanvas = () => {
 
@@ -196,13 +196,13 @@ globals.saveCanvas = () => {
 
     // clear sketches
     sketches = [];
-}
+};
 
 globals.debugCanvas = () => {
 
     console.log(strokes);
     console.log(timespan);
-}
+};
 
 function generateUuidv4() {
 
@@ -210,7 +210,7 @@ function generateUuidv4() {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
-}
+};
 
 function download(file, text) { 
   
@@ -229,7 +229,7 @@ function download(file, text) {
 
     // remove element from body
     document.body.removeChild(element); 
-} 
+};
 
 
 
