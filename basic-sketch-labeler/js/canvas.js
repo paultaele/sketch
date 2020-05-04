@@ -8,9 +8,8 @@ globals.loadCanvas = (inputSketches) => {
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
-
-    //
     drawStrokes(sketch);
+    document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back and next buttons
     document.getElementById("backButton").disabled = true;
@@ -24,6 +23,7 @@ globals.backCanvas = () => {
     --index;
     sketch = sketches[index];
     drawStrokes(sketch);
+    document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back and next buttons
     if (index <= 0) { document.getElementById("backButton").disabled = true; }
@@ -37,6 +37,7 @@ globals.nextCanvas = () => {
     ++index;
     sketch = sketches[index];
     drawStrokes(sketch);
+    document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back and next buttons
     document.getElementById("backButton").disabled = false;
