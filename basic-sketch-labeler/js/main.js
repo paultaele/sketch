@@ -6,6 +6,7 @@ window.globals = {
 window.onload = () => {
 
     document.getElementById("uploadButton").addEventListener('change', loadFiles);
+    document.getElementById("downloadButton").onclick = onClickDownload;
     document.getElementById("backButton").onclick = onClickBack;
     document.getElementById("nextButton").onclick = onClickNext;
     document.getElementById("labelButton").onclick = onClickLabel;
@@ -37,6 +38,7 @@ function loadFiles(event) {
     };
 }
 
+function onClickDownload()      { window.globals.downloadCanvas(); }
 function onClickNext()          { window.globals.nextCanvas(); }
 function onClickBack()          { window.globals.backCanvas(); }
 function onClickSelectAll()     { window.globals.selectAllCanvas(); }

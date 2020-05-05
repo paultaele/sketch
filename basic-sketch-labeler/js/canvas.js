@@ -5,7 +5,7 @@ globals.loadCanvas = (inputSketches) => {
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
-    shapes = [];
+    shapes = Array(sketches.length).fill([]);
     shapes[index] = [];
     
     // display strokes and stroke selections
@@ -19,6 +19,7 @@ globals.loadCanvas = (inputSketches) => {
     document.getElementById("resetButton").disabled = false;
     document.getElementById("selectAllButton").disabled = false;
     document.getElementById("selectNoneButton").disabled = false;
+    document.getElementById("downloadButton").disabled = false;
 
     // set behaviors for label input and button 
     document.getElementById("labelInput").value = "";
@@ -32,6 +33,33 @@ globals.loadCanvas = (inputSketches) => {
         
     };
 }
+
+globals.downloadCanvas = () => {
+
+    // 
+    let numEmpty = 0;
+    for (let i = 0; i < shapes.length; ++i) {
+
+        // get current shape
+        let shape = shapes[i];
+
+        // skip shape if empty
+        console.log(shape);
+        if (shape.length === 0) { ++numEmpty; continue; }
+        
+        // debug
+        console.log(shape);
+    }
+
+    //
+    if (numEmpty === sketches.length) {
+        alert("ERROR: There are no new labeled sketches to download.");
+        return;
+    }
+
+    // console.log(`sketches.length: ${sketches.length}`);
+    // console.log(`shapes.length: ${shapes.length}`);
+};
 
 globals.backCanvas = () => {
 

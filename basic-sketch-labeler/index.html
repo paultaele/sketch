@@ -23,10 +23,11 @@
 		<h1>Basic Sketch Labeler</h1>
 
 		<div>
-			<form method="post" enctype="multipart/form-data">
-				<label for="file">Choose file(s) to upload</label>
-				<input type="file" id="uploadButton" accept=".json">
+			<form method="post" enctype="multipart/form-data" style="display: inline-block;">
+				<label for="file" class="label">Upload</label>
+				<input type="file" id="uploadButton" class="label" accept=".json">
 			</form>
+			<button id="downloadButton" class="label" style="display: inline-block;" disabled>Download</button>
 		</div>
 
 		<br>
@@ -45,7 +46,6 @@
 		<br>
 
 		<div>
-			
 			<input type="text" id="labelInput" class="label" size="20" maxlength="20" placeholder="enter label here" disabled>
 			<button id="labelButton" class="label" disabled>Label</button>
 			<button id="resetButton" class="label" disabled>Reset</button>
@@ -59,6 +59,8 @@
 		<div id="strokeSelectionsArea">
 
 		</div>
+
+		<br>
 
 	</div>
 	
