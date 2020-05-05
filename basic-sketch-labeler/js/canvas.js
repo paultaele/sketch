@@ -1,7 +1,4 @@
 
-//TODO:
-// - handle single points
-// - adjust canvas size per sketch
 globals.loadCanvas = (inputSketches) => {
     
     // set sketches and first sketch
@@ -10,25 +7,35 @@ globals.loadCanvas = (inputSketches) => {
     sketch = sketches[index];
     drawStrokes(sketch);
     displayStrokeSelections(sketch);
+    document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back, next, select all, and select none buttons
     document.getElementById("backButton").disabled = true;
     if (sketches.length > 1) { document.getElementById("nextButton").disabled = false; }
-    document.getElementById("labelInput").disabled = false;
-    document.getElementById("labelButton").disabled = false;
     document.getElementById("resetButton").disabled = false;
     document.getElementById("selectAllButton").disabled = false;
     document.getElementById("selectNoneButton").disabled = false;
+
+
+    document.getElementById("labelInput").disabled = false;
+    document.getElementById("labelButton").disabled = false; // change to true later
+    // document.getElementById("labelInput").oninput = function() {
+
+    //     document.getElementById("labelButton").disabled
+    //         = document.getElementById("labelInput").value.trim() !== "" ?
+    //             false : true;
+        
+    // };
 }
 
-//
 globals.backCanvas = () => {
 
     // display the strokes on canvas
     sketch = sketches[--index];
     drawStrokes(sketch);
-    displayStrokeSelections(sketch)
+    displayStrokeSelections(sketch);
+    document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back and next buttons
@@ -36,19 +43,73 @@ globals.backCanvas = () => {
     document.getElementById("nextButton").disabled = false;
 };
 
-//
 globals.nextCanvas = () => {
 
     // display the strokes on canvas
     sketch = sketches[++index];
     drawStrokes(sketch);
-    displayStrokeSelections(sketch)
+    displayStrokeSelections(sketch);
+    document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
     // modify disabled status for back and next buttons
     document.getElementById("backButton").disabled = false;
     if (index >= sketches.length - 1) { document.getElementById("nextButton").disabled = true; }
 };
+
+globals.labelCanvas = () => {
+
+    // get the checked stroke IDs and mapping of stroke IDs to checked status
+    let checkboxes = document.getElementsByName(STROKE_CHECKBOX_GROUP);
+    let isChecked = false;
+    let idToChecked = {};
+    let checkedStrokeIds = [];
+    for (let i = 0; i < checkboxes.length; ++i) {
+
+        let checkbox = checkboxes[i];
+        if (checkbox.checked) {
+            isChecked = true;
+            checkedStrokeIds.push(checkbox.id);
+        }
+        idToChecked[checkbox.id] = checkbox.checked;
+    }
+
+    // skip if no checked checkboxes
+    if (!isChecked) {
+
+        alert("ERROR: Must check at least one checkbox to label.");
+        return;
+    }
+
+    // removed the checked checkboxes
+    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+
+        document.getElementById(checkedStrokeIds[i]).remove();
+    }
+
+    // remove the checked labels
+    let labels = document.getElementsByTagName("label");
+    let labelsToRemove = [];
+    for (let i = 0; i < labels.length; ++i) {
+
+        let label = labels[i];
+        let labelFor = label.htmlFor;
+        if (idToChecked[labelFor]) { labelsToRemove.push(label); }
+    }
+    for (let i = 0; i < labelsToRemove.length; ++i) {
+
+        labelsToRemove[i].remove();
+    }
+
+    // reset all stroke colors to black
+    for (let i = 0; i < project.activeLayer.children.length; ++i) {
+
+        project.activeLayer.children[i].strokeColor = COLOR_BLACK;
+    }
+
+    //TODO: record the label and corresponding stroke IDs
+    console.log(checkedStrokeIds);
+}
 
 globals.selectAllCanvas = () => {
 
@@ -70,7 +131,6 @@ globals.selectNoneCanvas = () => {
     }
 }
 
-//TODO
 function displayStrokeSelections(sketch) {
 
     // clear strokes selection area
