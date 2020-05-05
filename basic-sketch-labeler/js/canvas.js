@@ -1,40 +1,47 @@
 
 globals.loadCanvas = (inputSketches) => {
     
-    // set sketches and first sketch
+    // set sketches, index, first sketch, and shapes
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
+    shapes = [];
+    shapes[index] = [];
+    
+    // display strokes and stroke selections
     drawStrokes(sketch);
     displayStrokeSelections(sketch);
-    document.getElementById("labelInput").value = "";
-    document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
-    // modify disabled status for back, next, select all, and select none buttons
+    // set behaviors for text and buttons
+    document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
     document.getElementById("backButton").disabled = true;
     if (sketches.length > 1) { document.getElementById("nextButton").disabled = false; }
     document.getElementById("resetButton").disabled = false;
     document.getElementById("selectAllButton").disabled = false;
     document.getElementById("selectNoneButton").disabled = false;
 
-
+    // set behaviors for label input and button 
+    document.getElementById("labelInput").value = "";
     document.getElementById("labelInput").disabled = false;
-    document.getElementById("labelButton").disabled = false; // change to true later
-    // document.getElementById("labelInput").oninput = function() {
+    document.getElementById("labelButton").disabled = true;
+    document.getElementById("labelInput").oninput = function() {
 
-    //     document.getElementById("labelButton").disabled
-    //         = document.getElementById("labelInput").value.trim() !== "" ?
-    //             false : true;
+        document.getElementById("labelButton").disabled
+            = document.getElementById("labelInput").value.trim() !== "" ?
+                false : true;
         
-    // };
+    };
 }
 
 globals.backCanvas = () => {
 
-    // display the strokes on canvas
+    // display strokes and stroke selections
     sketch = sketches[--index];
     drawStrokes(sketch);
     displayStrokeSelections(sketch);
+
+    // clear and update information
+    shapes[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -45,10 +52,13 @@ globals.backCanvas = () => {
 
 globals.nextCanvas = () => {
 
-    // display the strokes on canvas
+    // display strokes and stroke selections
     sketch = sketches[++index];
     drawStrokes(sketch);
     displayStrokeSelections(sketch);
+
+    // clear and update information
+    shapes[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -81,13 +91,7 @@ globals.labelCanvas = () => {
         return;
     }
 
-    // removed the checked checkboxes
-    for (let i = 0; i < checkedStrokeIds.length; ++i) {
-
-        document.getElementById(checkedStrokeIds[i]).remove();
-    }
-
-    // remove the checked labels
+    // remove the checked labels and checkboxes
     let labels = document.getElementsByTagName("label");
     let labelsToRemove = [];
     for (let i = 0; i < labels.length; ++i) {
@@ -100,6 +104,10 @@ globals.labelCanvas = () => {
 
         labelsToRemove[i].remove();
     }
+    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+
+        document.getElementById(checkedStrokeIds[i]).remove();
+    }
 
     // reset all stroke colors to black
     for (let i = 0; i < project.activeLayer.children.length; ++i) {
@@ -107,8 +115,22 @@ globals.labelCanvas = () => {
         project.activeLayer.children[i].strokeColor = COLOR_BLACK;
     }
 
-    //TODO: record the label and corresponding stroke IDs
-    console.log(checkedStrokeIds);
+    // create and add labeled shape
+    let idToTime = {};
+    let shape = {};
+    for (let i = 0; i < sketch.strokes.length; ++i) {
+
+        idToTime[sketch.strokes[i].id] = sketch.strokes[i].points[0].time;
+    }
+    shape.subElements = [];
+    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+        
+        shape.subElements.push(checkedStrokeIds[i]);
+    }
+    shape.time = idToTime[shape.subElements[0]];
+    shape.interpretation = document.getElementById("labelInput").value;
+    shape.confidence = DEFAULT_CONFIDENCE;
+    shapes[index].push(shape);
 }
 
 globals.selectAllCanvas = () => {
@@ -187,7 +209,6 @@ function displayStrokeSelections(sketch) {
     globals.selectAllCanvas();
 }
 
-//
 function drawStrokes(sketch) {
 
     // clear all strokes from canvas
@@ -219,6 +240,7 @@ function drawStrokes(sketch) {
 
 let sketch;
 let sketches = [];
+let shapes = [];
 let index;
 const COLOR_BLACK = "#000000";
 const COLOR_RED = "#ff0000";
@@ -227,4 +249,5 @@ const PATH_STYLE = {
     strokeColor: COLOR_BLACK
 };
 const MAX_DOT_DISTANCE = 4.0;
+const DEFAULT_CONFIDENCE = "1.0";
 const STROKE_CHECKBOX_GROUP = "strokeCheckboxGroup";
