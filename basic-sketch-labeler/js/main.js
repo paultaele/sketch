@@ -8,6 +8,10 @@ window.onload = () => {
     document.getElementById("uploadButton").addEventListener('change', loadFiles);
     document.getElementById("backButton").onclick = onClickBack;
     document.getElementById("nextButton").onclick = onClickNext;
+    document.getElementById("selectAllButton").onclick = onClickSelectAll;
+    document.getElementById("selectNoneButton").onclick = onClickSelectNone;
+    document.getElementById("strokeSelectionsArea");
+
 }
 
 function loadFiles(event) {
@@ -32,5 +36,7 @@ function loadFiles(event) {
     };
 }
 
-function onClickNext()    { window.globals.nextCanvas(); }
-function onClickBack()    { window.globals.backCanvas(); }
+function onClickNext()          { window.globals.nextCanvas(); }
+function onClickBack()          { window.globals.backCanvas(); }
+function onClickSelectAll()     { window.globals.selectAllCanvas(); }
+function onClickSelectNone()    { window.globals.selectNoneCanvas(); }
