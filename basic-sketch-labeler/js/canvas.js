@@ -137,10 +137,10 @@ globals.labelCanvas = () => {
         document.getElementById(checkedStrokeIds[i]).remove();
     }
 
-    // reset all stroke colors to black
+    // reset all stroke colors to un-selected
     for (let i = 0; i < project.activeLayer.children.length; ++i) {
 
-        project.activeLayer.children[i].strokeColor = COLOR_BLACK;
+        project.activeLayer.children[i].strokeColor = COLOR_GREY;
     }
 
     // create and add labeled shape
@@ -167,7 +167,7 @@ globals.selectAllCanvas = () => {
     for (let i = 0; i < checkboxGroup.length; ++i) {
         
         checkboxGroup[i].checked = true;
-        project.activeLayer.children[i].strokeColor = COLOR_RED;
+        project.activeLayer.children[i].strokeColor = COLOR_BLACK;
     }
 }
 
@@ -177,7 +177,7 @@ globals.selectNoneCanvas = () => {
     for (let i = 0; i < checkboxGroup.length; ++i) {
         
         checkboxGroup[i].checked = false;
-        project.activeLayer.children[i].strokeColor = COLOR_BLACK;
+        project.activeLayer.children[i].strokeColor = COLOR_GREY;
     }
 }
 
@@ -217,13 +217,13 @@ function displayStrokeSelections(sketch) {
             if (this.checked) {
                 
                 index = idToIndex[this.id];
-                project.activeLayer.children[index].strokeColor = COLOR_RED;
+                project.activeLayer.children[index].strokeColor = COLOR_BLACK;
             }
             
             else {
 
                 index = idToIndex[this.id];
-                project.activeLayer.children[index].strokeColor = COLOR_BLACK;
+                project.activeLayer.children[index].strokeColor = COLOR_GREY;
             }
         });
 
@@ -272,9 +272,10 @@ let shapes = [];
 let index;
 const COLOR_BLACK = "#000000";
 const COLOR_RED = "#ff0000";
+const COLOR_GREY = "#c0c0c0";
 const PATH_STYLE = {
     strokeWidth: 4,
-    strokeColor: COLOR_BLACK
+    strokeColor: COLOR_GREY
 };
 const MAX_DOT_DISTANCE = 4.0;
 const DEFAULT_CONFIDENCE = "1.0";
