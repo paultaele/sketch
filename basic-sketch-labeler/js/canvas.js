@@ -5,8 +5,8 @@ globals.loadCanvas = (inputSketches) => {
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
-    shapes = Array(sketches.length).fill([]);
-    shapes[index] = [];
+    shapesList = Array(sketches.length).fill([]);
+    shapesList[index] = [];
     
     // display strokes and stroke selections
     drawStrokes(sketch);
@@ -36,29 +36,29 @@ globals.loadCanvas = (inputSketches) => {
 
 globals.downloadCanvas = () => {
 
-    // 
+    //TODO
     let numEmpty = 0;
-    for (let i = 0; i < shapes.length; ++i) {
+    for (let i = 0; i < shapesList.length; ++i) {
 
-        // get current shape
-        let shape = shapes[i];
+        // get current shapes
+        let shapes = shapesList[i];
 
-        // skip shape if empty
-        console.log(shape);
-        if (shape.length === 0) { ++numEmpty; continue; }
-        
-        // debug
-        console.log(shape);
+        // skip shapes if empty
+        if (shapes.length === 0) { ++numEmpty; continue; }
+
+        // TODO: create shape of remaining unlabeled stroeks
+            
     }
 
-    //
-    if (numEmpty === sketches.length) {
-        alert("ERROR: There are no new labeled sketches to download.");
-        return;
-    }
+    // debug
+    console.log(sketches[0].shapes);
 
-    // console.log(`sketches.length: ${sketches.length}`);
-    // console.log(`shapes.length: ${shapes.length}`);
+    // skip if there are no labeled shapes in sketches
+    //TODO: uncomment this code
+    // if (numEmpty === sketches.length) {
+    //     alert("ERROR: There are no new labeled sketches to download.");
+    //     return;
+    // }
 };
 
 globals.backCanvas = () => {
@@ -69,7 +69,7 @@ globals.backCanvas = () => {
     displayStrokeSelections(sketch);
 
     // clear and update information
-    shapes[index] = [];
+    shapesList[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -86,7 +86,7 @@ globals.nextCanvas = () => {
     displayStrokeSelections(sketch);
 
     // clear and update information
-    shapes[index] = [];
+    shapesList[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -158,7 +158,7 @@ globals.labelCanvas = () => {
     shape.time = idToTime[shape.subElements[0]];
     shape.interpretation = document.getElementById("labelInput").value;
     shape.confidence = DEFAULT_CONFIDENCE;
-    shapes[index].push(shape);
+    shapesList[index].push(shape);
 }
 
 globals.selectAllCanvas = () => {
@@ -268,7 +268,7 @@ function drawStrokes(sketch) {
 
 let sketch;
 let sketches = [];
-let shapes = [];
+let shapesList = [];
 let index;
 const COLOR_BLACK = "#000000";
 const COLOR_RED = "#ff0000";
