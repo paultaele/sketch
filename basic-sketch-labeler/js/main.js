@@ -10,6 +10,7 @@ window.onload = () => {
     document.getElementById("backButton").onclick = onClickBack;
     document.getElementById("nextButton").onclick = onClickNext;
     document.getElementById("labelButton").onclick = onClickLabel;
+    document.getElementById("resetButton").onclick = onClickReset;
     document.getElementById("selectAllButton").onclick = onClickSelectAll;
     document.getElementById("selectNoneButton").onclick = onClickSelectNone;
     document.getElementById("strokeSelectionsArea");
@@ -41,6 +42,8 @@ function loadFiles(event) {
 function onClickDownload()      { window.globals.downloadCanvas(); }
 function onClickNext()          { window.globals.nextCanvas(); }
 function onClickBack()          { window.globals.backCanvas(); }
+function onClickLabel()         { window.globals.labelCanvas(); }
+function onClickReset()         { window.globals.resetCanvas(); }
 function onClickSelectAll()     { window.globals.selectAllCanvas(); }
 function onClickSelectNone()    { window.globals.selectNoneCanvas(); }
-function onClickLabel()         { window.globals.labelCanvas(); }
+

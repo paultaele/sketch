@@ -217,6 +217,11 @@ globals.labelCanvas = () => {
     document.getElementById("labelInput").value = "";
 }
 
+globals.resetCanvas = () => {
+    
+    
+}
+
 globals.selectAllCanvas = () => {
 
     let checkboxGroup = document.getElementsByName(STROKE_CHECKBOX_GROUP);
