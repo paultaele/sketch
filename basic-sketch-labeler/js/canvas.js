@@ -163,18 +163,28 @@ globals.labelCanvas = () => {
         return;
     }
 
-    // remove the checked labels and checkboxes
+    // remove the checked labels, breaks, and checkboxes
     let labels = document.getElementsByTagName("label");
+    let breakElements = document.getElementsByTagName("br");
     let labelsToRemove = [];
+    let breakElementsToRemove = [];
     for (let i = 0; i < labels.length; ++i) {
 
         let label = labels[i];
-        let labelFor = label.htmlFor;
-        if (idToChecked[labelFor]) { labelsToRemove.push(label); }
+        if (idToChecked[label.htmlFor]) { labelsToRemove.push(label); }
     }
     for (let i = 0; i < labelsToRemove.length; ++i) {
 
         labelsToRemove[i].remove();
+    }
+    for (let i = 0; i < breakElements.length; ++i) {
+
+        let breakElement = breakElements[i];
+        if (idToChecked[breakElement.id]) { breakElementsToRemove.push(breakElement); }
+    }
+    for (let i = 0; i < breakElementsToRemove.length; ++i) {
+
+        breakElementsToRemove[i].remove();
     }
     for (let i = 0; i < checkedStrokeIds.length; ++i) {
 
@@ -215,11 +225,18 @@ globals.labelCanvas = () => {
 
     // clear label input
     document.getElementById("labelInput").value = "";
+
+    // debug
+    let temp = document.getElementById("strokeSelectionsArea");
+    console.log(temp);
 }
 
 globals.resetCanvas = () => {
     
-    
+    // debug
+    console.log("resetCanvas");
+    let temp = document.getElementById("strokeSelectionsArea");
+    console.log(temp);
 }
 
 globals.selectAllCanvas = () => {
@@ -276,6 +293,7 @@ function displayStrokeSelections(sketch) {
         label.htmlFor = strokeId;
         label.innerHTML = strokeId;
         let breakElement = document.createElement("br");
+        breakElement.id = strokeId;
 
         // set checkbox behavior
         checkbox.addEventListener("change", function() {
