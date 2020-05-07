@@ -1,13 +1,19 @@
 
 globals.loadCanvas = (inputSketches) => {
+
     
     // set sketches, index, first sketch, and shapes
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
-    shapesList = Array(sketches.length).fill([]);
-    shapesList[index] = [];
-    
+    shapesList = [];
+    checkedItemsList = [];
+    for (let i = 0; i < sketches.length; ++i) {
+ 
+        shapesList[i] = [];
+        checkedItemsList[i] = [];
+    }
+
     // display strokes and stroke selections
     drawStrokes(sketch);
     displayStrokeSelections(sketch);
@@ -34,9 +40,10 @@ globals.loadCanvas = (inputSketches) => {
     };
 }
 
+// TODO
 globals.downloadCanvas = () => {
 
-    //TODO
+    // update sketches' shapes
     let numEmpty = 0;
     for (let i = 0; i < sketches.length; ++i) {
 
@@ -116,6 +123,9 @@ globals.downloadCanvas = () => {
         alert("ERROR: There are no new labeled sketches to download.");
         return;
     }
+
+    // downlaod sketches with updated shapes
+    //TODO
 };
 
 globals.backCanvas = () => {
@@ -126,7 +136,6 @@ globals.backCanvas = () => {
     displayStrokeSelections(sketch);
 
     // clear and update information
-    shapesList[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -143,7 +152,6 @@ globals.nextCanvas = () => {
     displayStrokeSelections(sketch);
 
     // clear and update information
-    shapesList[index] = [];
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
 
@@ -161,8 +169,10 @@ globals.labelCanvas = () => {
     let checkedStrokeIds = [];
     for (let i = 0; i < checkboxes.length; ++i) {
 
+        // add checked stroke ID to list
         let checkbox = checkboxes[i];
         if (checkbox.checked) {
+
             isChecked = true;
             checkedStrokeIds.push(checkbox.id);
         }
@@ -210,12 +220,21 @@ globals.labelCanvas = () => {
     shape.subElements = [];
     for (let i = 0; i < checkedStrokeIds.length; ++i) {
         
-        shape.subElements.push(checkedStrokeIds[i]);
+        // add checked stroke ID to shape sub-elements and to checked items
+        let checkedStrokeId = checkedStrokeIds[i];
+        shape.subElements.push(checkedStrokeId);
     }
     shape.time = idToTime[shape.subElements[0]];
     shape.interpretation = document.getElementById("labelInput").value;
     shape.confidence = DEFAULT_CONFIDENCE;
     shapesList[index].push(shape);
+
+    // add checked stroke IDs to checked items
+    let checkedItems = checkedItemsList[index];
+    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+        
+        checkedItems.push(checkedStrokeIds[i]);
+    }
 
     // clear label input
     document.getElementById("labelInput").value = "";
@@ -253,11 +272,17 @@ function displayStrokeSelections(sketch) {
         idToIndex[sketch.strokes[i].id] = i;
     }
 
-    // create checkboxes for each stroke
+    // get current sketch's list of checked items
+    let checkedItems = checkedItemsList[index];
+
+    // create checkboxes for each stroke ID
     for (let i = 0; i < sketch.strokes.length; ++i) {
         
         // get the current stroke ID
         let strokeId = sketch.strokes[i].id;
+
+        // skip if stroke ID is already in list of checked items
+        if (checkedItems.includes(strokeId)) { continue; }
 
         // create HTML tags
         let checkbox = document.createElement("input"); 
@@ -327,11 +352,11 @@ function drawStrokes(sketch) {
 
 
 let sketch;
-let sketches = [];
-let shapesList = [];
+let sketches;
+let shapesList;
+let checkedItemsList;
 let index;
 const COLOR_BLACK = "#000000";
-const COLOR_RED = "#ff0000";
 const COLOR_GREY = "#c0c0c0";
 const PATH_STYLE = {
     strokeWidth: 4,
