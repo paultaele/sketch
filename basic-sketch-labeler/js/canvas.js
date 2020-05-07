@@ -44,88 +44,65 @@ globals.loadCanvas = (inputSketches) => {
 globals.downloadCanvas = () => {
 
     // update sketches' shapes
-    let numEmpty = 0;
     for (let i = 0; i < sketches.length; ++i) {
 
         // get current sketch and shapes
         let sketch = sketches[i];
         let shapes = shapesList[i];
 
-        // skip current sketch if shapes is empty (i.e., no shapes were labeled)
-        if (shapes.length === 0) { ++numEmpty; continue; }
-
-        // get list of all stroke ids
-        let strokes = sketch.strokes;
+        // get all IDs
         let ids = [];
-        for (let j = 0; j < strokes.length; ++j) {
+        for (let j = 0; j < sketch.strokes.length; ++j) {
 
-            let stroke = strokes[j];
+            let stroke = sketch.strokes[j];
             ids.push(stroke.id);
         }
-
-        // get map of labeled stroke IDs
-        let labeledIdsMap = {};
+        
+        // get labeled IDs
+        let labeledIds = [];
         for (let j = 0; j < shapes.length; ++j) {
-            
-            let shape = shapes[j];
-            for (let k = 0; k < shape.subElements.length; ++k) {
 
-                labeledIdsMap[shape.subElements[k]] = true;
+            // iterate through current shape's sub-elements
+            let subElements = shapes[j].subElements;
+            for (let k = 0; k < subElements.length; ++k) {
+
+                labeledIds.push(subElements[k]);
             }
         }
 
-        // get list of unlabeled stroke IDs
+        // get unlabeled IDs
         let unlabeledIds = [];
         for (let j = 0; j < ids.length; ++j) {
 
             let id = ids[j];
-            if (labeledIdsMap[id] !== true) { unlabeledIds.push(id); }
+            if (!labeledIds.includes(id)) { unlabeledIds.push(id); }
         }
 
-        // check for non-empty list of unlabeled IDs
+        // create and add unlabeled shape (if any) to shapes
         if (unlabeledIds.length > 0) {
 
-            // create shape of unlabeled strokes
-            let unlabeledShape = {};
-            unlabeledShape.confidence = "1,0";
-            unlabeledShape.interpretation = "";
-            unlabeledShape.subElements = [];
+            let shape = {};
+            shape.subElements = [];
             for (let j = 0; j < unlabeledIds.length; ++j) {
-
-                unlabeledShape.subElements.push(unlabeledIds[j]);
+                
+                // add checked stroke ID to shape sub-elements and to checked items
+                let unlabeledId = unlabeledIds[j];
+                shape.subElements.push(unlabeledId);
             }
-            for (let j = 0; j < sketch.strokes.length; ++j) {
-
-                let stroke = strokes[j];
-                if (stroke.id === unlabeledIds[0]) {
-
-                    unlabeledShape.time = stroke.time;
-                    break;       
-                }
-            }
-
-            // add unlabeled shape to list of shapes
-            shapes.push(unlabeledShape);
+            shape.time = sketch.strokes.find(stroke => stroke.id === unlabeledIds[0]).time;
+            shape.interpretation = "";
+            shape.confidence = DEFAULT_CONFIDENCE;
+            shapes.push(shape);
         }
 
-        // set sketch's shapes
-        sketch.shapes = [];
-        for (let j = 0; j < shapes.length; ++j) {
-
-            // add shape to sketch
-            let shape = shapes[j];
-            sketch.shapes.push(shape);
-        }
+        // update current sketch's shapes
+        sketch.shapes = shapes;
     }
 
-    // skip if there are no labeled shapes in sketches
-    if (numEmpty === sketches.length) {
-        alert("ERROR: There are no new labeled sketches to download.");
-        return;
-    }
+    // download the JSON data
+    let data = JSON.stringify(sketches);
+    download("data.json", data);
 
-    // downlaod sketches with updated shapes
-    //TODO
 };
 
 globals.backCanvas = () => {
@@ -348,6 +325,25 @@ function drawStrokes(sketch) {
         }
     }
 }
+
+function download(file, text) { 
+  
+    // create an invisible element 
+    // note: equivalent to
+    // <a href="path of file" download="file name"> 
+    let element = document.createElement('a'); 
+    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(text)); 
+    element.setAttribute('download', file); 
+
+    // include element into document
+    document.body.appendChild(element); 
+
+    // add onClick property 
+    element.click(); 
+
+    // remove element from body
+    document.body.removeChild(element); 
+};
 
 
 
