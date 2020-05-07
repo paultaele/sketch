@@ -181,7 +181,7 @@ globals.submitCanvas = () => {
     globals.clearCanvas();
 };
 
-globals.saveCanvas = () => {
+globals.downloadCanvas = () => {
 
     // handle warning/error cases
     if (strokes.length !== 0) {
@@ -201,12 +201,6 @@ globals.saveCanvas = () => {
 
     // clear sketches
     sketches = [];
-};
-
-globals.debugCanvas = () => {
-
-    console.log(strokes);
-    console.log(timespan);
 };
 
 function generateUuidv4() {

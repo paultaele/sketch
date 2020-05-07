@@ -38,27 +38,84 @@ globals.downloadCanvas = () => {
 
     //TODO
     let numEmpty = 0;
-    for (let i = 0; i < shapesList.length; ++i) {
+    for (let i = 0; i < sketches.length; ++i) {
 
-        // get current shapes
+        // get current sketch and shapes
+        let sketch = sketches[i];
         let shapes = shapesList[i];
 
-        // skip shapes if empty
+        // skip current sketch if shapes is empty (i.e., no shapes were labeled)
         if (shapes.length === 0) { ++numEmpty; continue; }
 
-        // TODO: create shape of remaining unlabeled stroeks
+        // get list of all stroke ids
+        let strokes = sketch.strokes;
+        let ids = [];
+        for (let j = 0; j < strokes.length; ++j) {
+
+            let stroke = strokes[j];
+            ids.push(stroke.id);
+        }
+
+        // get map of labeled stroke IDs
+        let labeledIdsMap = {};
+        for (let j = 0; j < shapes.length; ++j) {
             
+            let shape = shapes[j];
+            for (let k = 0; k < shape.subElements.length; ++k) {
+
+                labeledIdsMap[shape.subElements[k]] = true;
+            }
+        }
+
+        // get list of unlabeled stroke IDs
+        let unlabeledIds = [];
+        for (let j = 0; j < ids.length; ++j) {
+
+            let id = ids[j];
+            if (labeledIdsMap[id] !== true) { unlabeledIds.push(id); }
+        }
+
+        // check for non-empty list of unlabeled IDs
+        if (unlabeledIds.length > 0) {
+
+            // create shape of unlabeled strokes
+            let unlabeledShape = {};
+            unlabeledShape.confidence = "1,0";
+            unlabeledShape.interpretation = "";
+            unlabeledShape.subElements = [];
+            for (let j = 0; j < unlabeledIds.length; ++j) {
+
+                unlabeledShape.subElements.push(unlabeledIds[j]);
+            }
+            for (let j = 0; j < sketch.strokes.length; ++j) {
+
+                let stroke = strokes[j];
+                if (stroke.id === unlabeledIds[0]) {
+
+                    unlabeledShape.time = stroke.time;
+                    break;       
+                }
+            }
+
+            // add unlabeled shape to list of shapes
+            shapes.push(unlabeledShape);
+        }
+
+        // set sketch's shapes
+        sketch.shapes = [];
+        for (let j = 0; j < shapes.length; ++j) {
+
+            // add shape to sketch
+            let shape = shapes[j];
+            sketch.shapes.push(shape);
+        }
     }
 
-    // debug
-    console.log(sketches[0].shapes);
-
     // skip if there are no labeled shapes in sketches
-    //TODO: uncomment this code
-    // if (numEmpty === sketches.length) {
-    //     alert("ERROR: There are no new labeled sketches to download.");
-    //     return;
-    // }
+    if (numEmpty === sketches.length) {
+        alert("ERROR: There are no new labeled sketches to download.");
+        return;
+    }
 };
 
 globals.backCanvas = () => {
@@ -159,6 +216,9 @@ globals.labelCanvas = () => {
     shape.interpretation = document.getElementById("labelInput").value;
     shape.confidence = DEFAULT_CONFIDENCE;
     shapesList[index].push(shape);
+
+    // clear label input
+    document.getElementById("labelInput").value = "";
 }
 
 globals.selectAllCanvas = () => {
