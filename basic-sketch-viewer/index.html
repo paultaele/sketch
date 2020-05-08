@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Basic Sketch Labeler</title>
+	<script type="text/javascript" src="https://unpkg.com/acorn"></script>
+	<script type="text/javascript" src="https://unpkg.com/paper"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/paperscript" src="js/canvas.js" canvas="myCanvas"></script>
+	<style>
+		.center { text-align: center }
+		.label { font-size: 20px }
+	</style>
+</head>
+
+<body>
+	<a href="../">&lt;&lt; Back to Home</a>
+
+	<br><br>
+
+	<div class="center">
+
+		<h1>Basic Sketch Viewer</h1>
+
+		<div>
+			<form method="post" enctype="multipart/form-data">
+				<label for="file" class="label">Upload</label>
+				<input type="file" id="uploadButton" class="label" accept=".json">
+			</form>
+		</div>
+
+		<br>
+
+		<div>
+			<button id="backButton" class="label" disabled>Back</button>
+			<button id="nextButton" class="label" disabled>Next</button>
+		</div>
+		
+		<div>
+			<p id="indexDisplay">Waiting for sketches to be loaded...</p>
+		</div>
+
+		<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
+		
+		<br>
+
+		<div>
+			<button id="selectNoneButton" class="label" disabled>Select None</button>
+			<button id="selectAllButton" class="label" disabled>Select All</button>
+		</div>
+
+		<br>
+
+		<div id="strokeSelectionsArea">
+
+		</div>
+
+		<br>
+
+	</div>
+	
+</body>
+
+</html>

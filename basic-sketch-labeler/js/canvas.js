@@ -1,6 +1,5 @@
 
 globals.loadCanvas = (inputSketches) => {
-
     
     // set sketches, index, first sketch, and shapes
     sketches = inputSketches;
@@ -224,7 +223,7 @@ globals.labelCanvas = () => {
 
     // clear label input
     document.getElementById("labelInput").value = "";
-}
+};
 
 globals.resetCanvas = () => {
     
@@ -251,7 +250,7 @@ globals.selectAllCanvas = () => {
         checkboxGroup[i].checked = true;
         project.activeLayer.children[i].strokeColor = COLOR_BLACK;
     }
-}
+};
 
 globals.selectNoneCanvas = () => {
     
@@ -261,7 +260,7 @@ globals.selectNoneCanvas = () => {
         checkboxGroup[i].checked = false;
         project.activeLayer.children[i].strokeColor = COLOR_GREY;
     }
-}
+};
 
 function displayStrokeCheckboxes(sketch) {
 
@@ -302,16 +301,14 @@ function displayStrokeCheckboxes(sketch) {
         // set checkbox behavior
         checkbox.addEventListener("change", function() {
 
-            let index;
+            let index = idToIndex[this.id];
             if (this.checked) {
                 
-                index = idToIndex[this.id];
                 project.activeLayer.children[index].strokeColor = COLOR_BLACK;
             }
             
             else {
 
-                index = idToIndex[this.id];
                 project.activeLayer.children[index].strokeColor = COLOR_GREY;
             }
         });
