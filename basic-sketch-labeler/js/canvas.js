@@ -14,9 +14,9 @@ globals.loadCanvas = (inputSketches) => {
         checkedItemsList[i] = [];
     }
 
-    // display strokes and stroke selections
+    // display strokes and checkboxes
     drawStrokes(sketch);
-    displayStrokeSelections(sketch);
+    displayStrokeCheckboxes(sketch);
 
     // set behaviors for text and buttons
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -40,7 +40,6 @@ globals.loadCanvas = (inputSketches) => {
     };
 }
 
-// TODO
 globals.downloadCanvas = () => {
 
     // update sketches' shapes
@@ -107,10 +106,10 @@ globals.downloadCanvas = () => {
 
 globals.backCanvas = () => {
 
-    // display strokes and stroke selections
+    // display strokes and checkboxes
     sketch = sketches[--index];
     drawStrokes(sketch);
-    displayStrokeSelections(sketch);
+    displayStrokeCheckboxes(sketch);
 
     // clear and update information
     document.getElementById("labelInput").value = "";
@@ -123,10 +122,10 @@ globals.backCanvas = () => {
 
 globals.nextCanvas = () => {
 
-    // display strokes and stroke selections
+    // display strokes and checkboxes
     sketch = sketches[++index];
     drawStrokes(sketch);
-    displayStrokeSelections(sketch);
+    displayStrokeCheckboxes(sketch);
 
     // clear and update information
     document.getElementById("labelInput").value = "";
@@ -225,18 +224,23 @@ globals.labelCanvas = () => {
 
     // clear label input
     document.getElementById("labelInput").value = "";
-
-    // debug
-    let temp = document.getElementById("strokeSelectionsArea");
-    console.log(temp);
 }
 
 globals.resetCanvas = () => {
     
-    // debug
-    console.log("resetCanvas");
-    let temp = document.getElementById("strokeSelectionsArea");
-    console.log(temp);
+    // clear shapes, checked items list. and label input
+    shapesList[index] = [];
+    checkedItemsList[index] = [];
+    document.getElementById("labelInput").value = "";
+
+    // 
+    for (let i = 0; i < project.activeLayer.children.length; ++i) {
+
+        project.activeLayer.children[i].strokeColor = COLOR_BLACK;
+    }
+
+    // re-display stroke checkboxes 
+    displayStrokeCheckboxes(sketch);
 }
 
 globals.selectAllCanvas = () => {
@@ -259,7 +263,7 @@ globals.selectNoneCanvas = () => {
     }
 }
 
-function displayStrokeSelections(sketch) {
+function displayStrokeCheckboxes(sketch) {
 
     // clear strokes selection area
     document.getElementById("strokeSelectionsArea").innerHTML = "";
@@ -330,6 +334,7 @@ function drawStrokes(sketch) {
     // resize canvas to sketch 
     document.getElementById("myCanvas").width = sketch.canvasWidth;
     document.getElementById("myCanvas").height = sketch.canvasHeight;
+    project.activeLayer.view.viewSize = new Size(sketch.canvasWidth, sketch.canvasHeight);
 
     // iterate through each sketch stroke
     for (let i = 0; i < sketch.strokes.length; ++i) {
