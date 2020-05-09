@@ -140,8 +140,8 @@ globals.labelCanvas = () => {
     // get the checked stroke IDs and mapping of stroke IDs to checked status
     let checkboxes = document.getElementsByName(STROKE_CHECKBOX_GROUP);
     let isChecked = false;
-    let idToChecked = {};
-    let checkedStrokeIds = [];
+    let checkedCheckboxes = []; // checked checkedboxes
+    let idToChecked = {};       // stroke ID to checked stroke IDs mapping
     for (let i = 0; i < checkboxes.length; ++i) {
 
         // add checked stroke ID to list
@@ -149,7 +149,7 @@ globals.labelCanvas = () => {
         if (checkbox.checked) {
 
             isChecked = true;
-            checkedStrokeIds.push(checkbox.id);
+            checkedCheckboxes.push(checkbox.id);
         }
         idToChecked[checkbox.id] = checkbox.checked;
     }
@@ -162,31 +162,22 @@ globals.labelCanvas = () => {
     }
 
     // remove the checked labels, breaks, and checkboxes
-    let labels = document.getElementsByTagName("label");
-    let breakElements = document.getElementsByTagName("br");
-    let labelsToRemove = [];
-    let breakElementsToRemove = [];
-    for (let i = 0; i < labels.length; ++i) {
+    let labels = document.getElementsByTagName("label");        // label elements
+    // let breakElements = document.getElementsByTagName("br");    // break elements
+    let labelsToBold = [];
+    for (let i = 0; i < labels.length; ++i) { // get checked labels
 
         let label = labels[i];
-        if (idToChecked[label.htmlFor]) { labelsToRemove.push(label); }
+        if (idToChecked[label.htmlFor]) { labelsToBold.push(label); }
     }
-    for (let i = 0; i < labelsToRemove.length; ++i) {
+    for (let i = 0; i < checkedCheckboxes.length; ++i) { // uncheck checked checkboxes
 
-        labelsToRemove[i].remove();
+        document.getElementById(checkedCheckboxes[i]).checked = false;
     }
-    for (let i = 0; i < breakElements.length; ++i) {
+    for (let i = 0; i < labelsToBold.length; ++i) { // bold checked labels
 
-        let breakElement = breakElements[i];
-        if (idToChecked[breakElement.id]) { breakElementsToRemove.push(breakElement); }
-    }
-    for (let i = 0; i < breakElementsToRemove.length; ++i) {
-
-        breakElementsToRemove[i].remove();
-    }
-    for (let i = 0; i < checkedStrokeIds.length; ++i) {
-
-        document.getElementById(checkedStrokeIds[i]).remove();
+        let labelToBold = labelsToBold[i];
+        labelToBold.innerHTML = "<em>" + labelToBold.innerHTML + "</em>";
     }
 
     // reset all stroke colors to un-selected
@@ -203,10 +194,10 @@ globals.labelCanvas = () => {
         idToTime[sketch.strokes[i].id] = sketch.strokes[i].points[0].time;
     }
     shape.subElements = [];
-    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+    for (let i = 0; i < checkedCheckboxes.length; ++i) {
         
         // add checked stroke ID to shape sub-elements and to checked items
-        let checkedStrokeId = checkedStrokeIds[i];
+        let checkedStrokeId = checkedCheckboxes[i];
         shape.subElements.push(checkedStrokeId);
     }
     shape.time = idToTime[shape.subElements[0]];
@@ -216,9 +207,9 @@ globals.labelCanvas = () => {
 
     // add checked stroke IDs to checked items
     let checkedItems = checkedItemsList[index];
-    for (let i = 0; i < checkedStrokeIds.length; ++i) {
+    for (let i = 0; i < checkedCheckboxes.length; ++i) {
         
-        checkedItems.push(checkedStrokeIds[i]);
+        checkedItems.push(checkedCheckboxes[i]);
     }
 
     // clear label input
@@ -284,7 +275,10 @@ function displayStrokeCheckboxes(sketch) {
         let strokeId = sketch.strokes[i].id;
 
         // skip if stroke ID is already in list of checked items
-        if (checkedItems.includes(strokeId)) { continue; }
+        // if (checkedItems.includes(strokeId)) {
+            
+        //     continue; 
+        // }
 
         // create HTML tags
         let checkbox = document.createElement("input"); 
@@ -294,7 +288,13 @@ function displayStrokeCheckboxes(sketch) {
         checkbox.value = strokeId;
         let label = document.createElement("label");
         label.htmlFor = strokeId;
-        label.innerHTML = strokeId;
+
+        let innerHTML = checkedItems.includes(strokeId)
+            ? "<em>" + strokeId + "</em>"
+            : strokeId;
+
+        label.innerHTML = innerHTML;
+        
         let breakElement = document.createElement("br");
         breakElement.id = strokeId;
 

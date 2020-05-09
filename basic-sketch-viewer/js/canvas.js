@@ -104,25 +104,21 @@ function displayInterpretationCheckboxes(sketch) {
         // get the current shape interpretation and time
         let interpretation = sketch.shapes[i].interpretation;
         if (interpretation.length === 0) { interpretation = "&#12296;unlabeled&#12297;"; }
-        let time = sketch.shapes[i].time;
 
         // create HTML tags
-        let checkbox = document.createElement("input"); 
+        let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.name = STROKE_CHECKBOX_GROUP;
-        checkbox.id = time;
-        checkbox.value = time;
+        checkbox.id = i;
+        checkbox.value = i;
         let label = document.createElement("label");
-        label.htmlFor = time;
+        label.htmlFor = i;
         label.innerHTML = interpretation;
-        let breakElement = document.createElement("br");
-        breakElement.id = time;
 
         // set checkbox behavior
         checkbox.addEventListener("change", function() {
 
-            let index = timeToIndex[this.id];
-            let shape = sketch.shapes[index];
+            let shape = sketch.shapes[this.id];
             let subElements = shape.subElements;
             let strokeIndices = [];
             
@@ -162,7 +158,7 @@ function displayInterpretationCheckboxes(sketch) {
         // add checkbox to stroke selections area
         document.getElementById("strokeSelectionsArea").appendChild(checkbox);
         document.getElementById("strokeSelectionsArea").appendChild(label);
-        document.getElementById("strokeSelectionsArea").appendChild(breakElement);
+        document.getElementById("strokeSelectionsArea").appendChild(document.createElement("br"));
     }
 
     // select all checkboxes and highlight all strokes
@@ -181,8 +177,7 @@ function setInterpretationCheckboxes(status, color) {
         checkbox.checked = status;
 
         // get current checkbox's corresponding strokes IDs
-        let id = parseInt(checkbox.id);
-        let subElements = sketch.shapes.find(shape => shape.time === id).subElements;
+        let subElements = sketch.shapes[checkbox.id].subElements;
 
         // create mapping and list of stroke IDs
         let idToIndex = {};
