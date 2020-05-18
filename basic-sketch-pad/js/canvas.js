@@ -122,9 +122,9 @@ globals.submitCanvas = () => {
 
     // create canvas
     let sketch = {};
-    sketch.strokes = [];
 
-    // set the sketch's strokes
+    // set the sketch's strokes and substrokes
+    sketch.strokes = [];
     for (let i = 0; i < strokes.length; ++i) {
         
         // initialize sketch stroke
@@ -147,6 +147,7 @@ globals.submitCanvas = () => {
             };
         }
     }
+    sketch.substrokes = sketch.strokes;
 
     // get sketch's start time
     let firstTime = timespan[0][0];
