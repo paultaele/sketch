@@ -9,6 +9,7 @@ window.onload = () => {
     document.getElementById("downloadButton").onclick = onClickDownload;
     document.getElementById("backButton").onclick = onClickBack;
     document.getElementById("nextButton").onclick = onClickNext;
+    document.getElementById("assignButton").onclick = onClickAssign;
     document.getElementById("labelButton").onclick = onClickLabel;
     document.getElementById("resetButton").onclick = onClickReset;
     document.getElementById("selectAllButton").onclick = onClickSelectAll;
@@ -42,6 +43,7 @@ function loadFiles(event) {
 function onClickDownload()      { window.globals.downloadCanvas(); }
 function onClickNext()          { window.globals.nextCanvas(); }
 function onClickBack()          { window.globals.backCanvas(); }
+function onClickAssign()        { window.globals.assignCanvas(); }
 function onClickLabel()         { window.globals.labelCanvas(); }
 function onClickReset()         { window.globals.resetCanvas(); }
 function onClickSelectAll()     { window.globals.selectAllCanvas(); }

@@ -1,14 +1,16 @@
 
 globals.loadCanvas = (inputSketches) => {
 
-    // set sketches, index, first sketch, and shapes
+    // set sketches, index, first sketch, shapes, and domain state
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
+    hasDomain = false;
 
-    // display strokes and checkboxes
+    // display strokes, checkboxes, and domain
     drawStrokes(sketch);
     displayInterpretationCheckboxes(sketch);
+    displayDomainText(sketch.domain);
 
     // set behaviors for text and buttons
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -20,10 +22,11 @@ globals.loadCanvas = (inputSketches) => {
 
 globals.backCanvas = () => {
 
-    // display strokes and checkboxes
+    // display strokes, checkboxes, and domain
     sketch = sketches[--index];
     drawStrokes(sketch);
     displayInterpretationCheckboxes(sketch);
+    displayDomainText(sketch.domain);
 
     // clear and update information
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -35,10 +38,11 @@ globals.backCanvas = () => {
 
 globals.nextCanvas = () => {
 
-    // display strokes and checkboxes
+    // display strokes, checkboxes, and domain
     sketch = sketches[++index];
     drawStrokes(sketch);
     displayInterpretationCheckboxes(sketch);
+    displayDomainText(sketch.domain);
 
     // clear and update information
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -165,6 +169,19 @@ function displayInterpretationCheckboxes(sketch) {
     globals.selectAllCanvas();
 }
 
+function displayDomainText(domain) {
+
+    // handle empty domain name
+    if (domain.length === 0) { domain = "&#12296;no domain&#12297;"; }
+
+    // display domain
+    let domainDisplayArea = document.getElementById("domainDisplayArea");
+    domainDisplayArea.innerHTML = "";
+    let p = document.createElement("p");
+    p.innerHTML = `<strong>Domain:</strong> ${domain}`;
+    domainDisplayArea.appendChild(p);
+}
+
 function setInterpretationCheckboxes(status, color) {
 
     // iterate through each checkbox
@@ -205,6 +222,7 @@ function setInterpretationCheckboxes(status, color) {
 let sketch;
 let sketches;
 let index;
+let hasDomain;
 const COLOR_BLACK = "#000000";
 const COLOR_GREY = "#c0c0c0";
 const PATH_STYLE = {

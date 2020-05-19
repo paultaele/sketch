@@ -1,11 +1,12 @@
 
 globals.loadCanvas = (inputSketches) => {
     
-    // set sketches, index, first sketch, and shapes
+    // set sketches, index, first sketch, shapes, and domain
     sketches = inputSketches;
     index = 0;
     sketch = sketches[index];
     shapesList = [];
+    domain = "";
     checkedItemsList = [];
     for (let i = 0; i < sketches.length; ++i) {
  
@@ -26,7 +27,12 @@ globals.loadCanvas = (inputSketches) => {
     document.getElementById("selectNoneButton").disabled = false;
     document.getElementById("downloadButton").disabled = false;
 
-    // set behaviors for label input and button 
+    // set behaviors for domain components
+    document.getElementById("domainInput").value = "";
+    document.getElementById("domainInput").disabled = false;
+    document.getElementById("assignButton").disabled = false;
+
+    // set behaviors for label components 
     document.getElementById("labelInput").value = "";
     document.getElementById("labelInput").disabled = false;
     document.getElementById("labelButton").disabled = true;
@@ -110,6 +116,9 @@ globals.backCanvas = () => {
     drawStrokes(sketch);
     displayStrokeCheckboxes(sketch);
 
+    // assign domain
+    sketch.domain = domain;
+
     // clear and update information
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -126,6 +135,9 @@ globals.nextCanvas = () => {
     drawStrokes(sketch);
     displayStrokeCheckboxes(sketch);
 
+    // assign domain
+    sketch.domain = domain;
+
     // clear and update information
     document.getElementById("labelInput").value = "";
     document.getElementById("indexDisplay").innerHTML = `${index + 1} / ${sketches.length}`;
@@ -134,6 +146,24 @@ globals.nextCanvas = () => {
     document.getElementById("backButton").disabled = false;
     if (index >= sketches.length - 1) { document.getElementById("nextButton").disabled = true; }
 };
+
+globals.assignCanvas = () => {
+
+    // get domainInput component
+    let domainInput = document.getElementById("domainInput");
+    domain = domainInput.value;
+    domainInput.value = "";
+
+    // display domain
+    let p = document.createElement("p");
+    let domainDisplayArea = document.getElementById("domainDisplayArea");
+    p.innerHTML = `<strong>Domain:</strong> ${domain}`;
+    domainDisplayArea.innerHTML = "";
+    domainDisplayArea.appendChild(p);
+
+    // assign domain to sketch
+    sketch.domain = domain;
+}
 
 globals.labelCanvas = () => {
 
@@ -351,7 +381,7 @@ function drawStrokes(sketch) {
     }
 }
 
-function download(file, text) { 
+function download(file, text) {
   
     // create an invisible element 
     // note: equivalent to
@@ -377,6 +407,7 @@ let sketches;
 let shapesList;
 let checkedItemsList;
 let index;
+let domain;
 const COLOR_BLACK = "#000000";
 const COLOR_GREY = "#c0c0c0";
 const PATH_STYLE = {

@@ -9,7 +9,7 @@
 	<script type="text/paperscript" src="js/canvas.js" canvas="myCanvas"></script>
 	<style>
 		.center { text-align: center }
-		.label { font-size: 20px }
+		.textstyle { font-size: 20px }
 	</style>
 </head>
 
@@ -24,17 +24,17 @@
 
 		<div>
 			<form method="post" enctype="multipart/form-data" style="display: inline-block;">
-				<label for="file" class="label">Upload</label>
-				<input type="file" id="uploadButton" class="label" accept=".json">
+				<label for="file" class="textstyle">Upload</label>
+				<input type="file" id="uploadButton" class="textstyle" accept=".json">
 			</form>
-			<button id="downloadButton" class="label" style="display: inline-block;" disabled>Download</button>
+			<button id="downloadButton" class="textstyle" style="display: inline-block;" disabled>Download</button>
 		</div>
 
 		<br>
 
 		<div>
-			<button id="backButton" class="label" disabled>Back</button>
-			<button id="nextButton" class="label" disabled>Next</button>
+			<button id="backButton" class="textstyle" disabled>Back</button>
+			<button id="nextButton" class="textstyle" disabled>Next</button>
 		</div>
 		
 		<div>
@@ -42,16 +42,21 @@
 		</div>
 
 		<canvas id="myCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
-		
-		<br>
+
+		<div id="domainDisplayArea">
+			<p>[no domain assigned]</p>
+		</div>
 
 		<div>
-			<input type="text" id="labelInput" class="label" size="20" maxlength="20" placeholder="enter label here" disabled>
-			<button id="labelButton" class="label" disabled>Label</button>
-			<button id="resetButton" class="label" disabled>Reset</button>
+			<input type="text" id="domainInput" class="textstyle" size="20" maxlength="20" placeholder="assign domain here" disabled>
+			<button id="assignButton" class="textstyle" disabled>Assign</button>
+			<br><br>	
+			<input type="text" id="labelInput" class="textstyle" size="20" maxlength="20" placeholder="enter label here" disabled>
+			<button id="labelButton" class="textstyle" disabled>Label</button>
+			<button id="resetButton" class="textstyle" disabled>Reset</button>
 			<br><br>
-			<button id="selectNoneButton" class="label" disabled>Select None</button>
-			<button id="selectAllButton" class="label" disabled>Select All</button>
+			<button id="selectNoneButton" class="textstyle" disabled>Select None</button>
+			<button id="selectAllButton" class="textstyle" disabled>Select All</button>
 		</div>
 
 		<br>
