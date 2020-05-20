@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Basic Sketch Algorithms</title>
+    <link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="https://unpkg.com/acorn"></script>
+	<script type="text/javascript" src="https://unpkg.com/paper"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/paperscript" src="js/drawCanvas.js" canvas="drawCanvas"></script>
+	<script type="text/paperscript" src="js/viewCanvas.js" canvas="viewCanvas"></script>
+	<style>
+		.center { text-align: center }
+		.textStyle { font-size: 20px }
+	</style>
+</head>
+
+<body>
+	<a href="../">&lt;&lt; Back to Home</a>
+
+    <br><br>
+    
+    <div id="header"><h1>Basic Sketch Algorithms</h1></div>
+
+	<div id="content">
+
+        <!-- draw canvas -->
+        <div>
+			<canvas id="drawCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
+		</div>
+
+        <!-- view canvas -->
+        <div>
+			<canvas id="viewCanvas" width="498" height="498" style="display:none; border:1px solid #000000;" resize="false"></canvas>
+		</div>
+
+        <!-- draw canvas buttons -->
+		<div>
+			<button id="clearButton" class="textStyle">Clear</button>
+			<button id="undoButton" class="textStyle">Undo</button>
+            <button id="testButton" class="textStyle">Test</button>
+            <select id="algorithmSelect" class="textStyle">
+                <!-- <option value="divider">--------------------</option> -->
+				<option value="endpoints">Endpoints</option>
+				<option value="boundingBox">Bounding Box</option>
+				<option value="boundingBoxes">Bounding Boxes</option>
+            </select>
+		</div>
+		
+	</div>
+	
+</body>
+
+</html>

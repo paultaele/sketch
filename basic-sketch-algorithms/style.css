@@ -1,0 +1,12 @@
+
+#header {
+    text-align: center;
+}
+
+#content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /*max-width: 960px;*/		/* width of content */
+    /*margin: 0 auto;*/ 		/* centers on the page */
+    text-align: center;
+}

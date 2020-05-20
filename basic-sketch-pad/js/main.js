@@ -15,5 +15,5 @@ window.onload = () => {
     function onClickClear()     { window.globals.clearCanvas(); }
     function onClickUndo()      { window.globals.undoCanvas(); }
     function onClickSubmit()    { window.globals.submitCanvas(); }
-    function onClickDownload()  { window.globals.downloadCanvas(); } 
+    function onClickDownload()  { window.globals.downloadCanvas(); }
 }
