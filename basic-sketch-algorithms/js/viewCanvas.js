@@ -17,6 +17,16 @@ globals.runAlgorithm = (sketch, algorithmValue) => {
         let y = Number.parseInt(document.getElementById("translateY").value);
         runTranslate(sketch, x, y);
     }
+    else if (algorithmValue === "resampleCount")    {
+
+        let count = Number.parseInt(document.getElementById("resampleCount").value);
+        runResampleCount(sketch, count);
+    }
+    else if (algorithmValue === "resampleDistance")    {
+
+        let pixels = Number.parseInt(document.getElementById("resampleDistance").value);
+        runResampleDistance(sketch, pixels);
+    }
 }
 
 function runEndpoints(sketch) {
@@ -112,6 +122,48 @@ function runTranslate(sketch, x, y) {
 
     let newSketch = SketchRecTools.translate(sketch, x, y);
     drawStrokes(newSketch, COLOR_RED);
+}
+
+function runResampleCount(sketch, count) {
+
+    // get all resampled points
+    let newSketch = SketchRecTools.resampleByCount(sketch, count);
+    let points = [];
+    for (let stroke of newSketch.strokes) {
+
+        for (let point of stroke.points) {
+
+            points.push(point);
+        }
+    }
+
+    // draw resampled points
+    for (let point of points) {
+
+        let dot = new Path.Circle(new Point(point.x, point.y), DOT_SIZE);
+        dot.fillColor = 'red';
+    }
+}
+
+function runResampleDistance(sketch, pixels) {
+
+    // get all resampled points
+    let newSketch = SketchRecTools.resampleByDistance(sketch, pixels);
+    let points = [];
+    for (let stroke of newSketch.strokes) {
+
+        for (let point of stroke.points) {
+
+            points.push(point);
+        }
+    }
+
+    // draw resampled points
+    for (let point of points) {
+
+        let dot = new Path.Circle(new Point(point.x, point.y), DOT_SIZE);
+        dot.fillColor = 'red';
+    }
 }
 
 

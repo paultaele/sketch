@@ -11,6 +11,8 @@ window.addEventListener("load", () => {
     document.getElementById("testButton").onclick = onClickTest;
     document.getElementById("algorithmSelect").onchange = onChangeAlgorithm;
 
+    document.getElementById("viewCanvas").style.display = "none";
+
     function onClickClear()         { window.globals.clearCanvas(); }
     function onClickUndo()          { window.globals.undoCanvas(); }
     function onClickTest()          { window.globals.testCanvas(); }
@@ -25,6 +27,10 @@ window.addEventListener("load", () => {
         if (algorithmValue === "divider") { testButton.disabled = true; }
         else { testButton.disabled = false; }
 
+        // hide attributes
+        let elements = document.getElementsByClassName("attributes");
+        for (let element of elements) { element.style.display = "none"; }
+
         // case: translate
         if (algorithmValue === "translate") {
 
@@ -33,12 +39,18 @@ window.addEventListener("load", () => {
             document.getElementById("translateY").value = "0";
         }
 
-        // case: no algorithm with attributes
-        else {
+        // case: resample (count)
+        else if (algorithmValue === "resampleCount") {
 
-            let elements = document.getElementsByClassName("attributes");
-            for (let element of elements) { element.style.display = "none"; }
+            document.getElementById("resampleCountArea").style.display = "inline";
+            document.getElementById("resampleCount").value = "100";
+        }
+        
+        // case: resample (distance)
+        else if (algorithmValue === "resampleDistance") {
+
+            document.getElementById("resampleDistanceArea").style.display = "inline";
+            document.getElementById("resampleDistance").value = "100";
         }
     }
 });
-

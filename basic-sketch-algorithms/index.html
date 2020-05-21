@@ -27,7 +27,7 @@
 
         <!-- view canvas -->
         <div>
-			<canvas id="viewCanvas" width="498" height="498" style="display:none; border:1px solid #000000;"></canvas>
+			<canvas id="viewCanvas" width="498" height="498" style="border:1px solid #000000;"></canvas>
 		</div>
 
         <!-- draw canvas buttons -->
@@ -43,6 +43,8 @@
 				<option value="centerMidpoint">Center (Midpoint)</option>
 				<option value="centerCentroid">Center (Centroid)</option>
 				<option value="translate">Translate</option>
+				<option value="resampleCount">Resample (Count)</option>
+				<option value="resampleDistance">Resample (Distance)</option>
 			</select>
 			
 			<br><br>
@@ -54,6 +56,20 @@
 	
 				<label for="translateY" class="textStyle">move y:</label>
 				<input type="text" id="translateY" class="textStyle" value="0" size="3" maxlength="3">
+	
+			</div>
+
+			<div id="resampleCountArea" class="attributes" style="display:none">
+
+				<label for="resampleCount" class="textStyle">count:</label>
+				<input type="text" id="resampleCount" class="textStyle" value="0" size="3" maxlength="3">
+	
+			</div>
+
+			<div id="resampleDistanceArea" class="attributes" style="display:none">
+
+				<label for="resampleDistance" class="textStyle">pixels:</label>
+				<input type="text" id="resampleDistance" class="textStyle" value="0" size="3" maxlength="3">
 	
 			</div>
 
