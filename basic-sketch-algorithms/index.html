@@ -9,10 +9,6 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/paperscript" src="js/drawCanvas.js" canvas="drawCanvas"></script>
 	<script type="text/paperscript" src="js/viewCanvas.js" canvas="viewCanvas"></script>
-	<style>
-		.center { text-align: center }
-		.textStyle { font-size: 20px }
-	</style>
 </head>
 
 <body>
@@ -31,21 +27,39 @@
 
         <!-- view canvas -->
         <div>
-			<canvas id="viewCanvas" width="498" height="498" style="display:none; border:1px solid #000000;" resize="false"></canvas>
+			<canvas id="viewCanvas" width="498" height="498" style="display:none; border:1px solid #000000;"></canvas>
 		</div>
 
         <!-- draw canvas buttons -->
 		<div>
 			<button id="clearButton" class="textStyle">Clear</button>
 			<button id="undoButton" class="textStyle">Undo</button>
-            <button id="testButton" class="textStyle">Test</button>
+            <button id="testButton" class="textStyle" disabled="true">Test</button>
             <select id="algorithmSelect" class="textStyle">
-                <!-- <option value="divider">--------------------</option> -->
+                <option value="divider">--------------------</option>
 				<option value="endpoints">Endpoints</option>
 				<option value="boundingBox">Bounding Box</option>
 				<option value="boundingBoxes">Bounding Boxes</option>
-            </select>
+				<option value="centerMidpoint">Center (Midpoint)</option>
+				<option value="centerCentroid">Center (Centroid)</option>
+				<option value="translate">Translate</option>
+			</select>
+			
+			<br><br>
+
+			<div id="translateArea" class="attributes" style="display:none">
+
+				<label for="translateX" class="textStyle">move x:</label>
+				<input type="text" id="translateX" class="textStyle" value="0" size="3" maxlength="3">
+	
+				<label for="translateY" class="textStyle">move y:</label>
+				<input type="text" id="translateY" class="textStyle" value="0" size="3" maxlength="3">
+	
+			</div>
+
 		</div>
+
+		
 		
 	</div>
 	

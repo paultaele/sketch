@@ -114,9 +114,6 @@ function displayViewCanvas(state) {
     if (state) {
 
         viewCanvas.style.display = "inline";
-        viewCanvas.width = 498;
-        viewCanvas.height = 498;
-        viewCanvas.style.border = "1px solid #000000";
     }
 
     // case: hide view canvas

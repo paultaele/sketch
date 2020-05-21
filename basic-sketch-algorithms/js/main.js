@@ -11,22 +11,34 @@ window.addEventListener("load", () => {
     document.getElementById("testButton").onclick = onClickTest;
     document.getElementById("algorithmSelect").onchange = onChangeAlgorithm;
 
-    // document.getElementById("testButton").disabled = true;
-
     function onClickClear()         { window.globals.clearCanvas(); }
     function onClickUndo()          { window.globals.undoCanvas(); }
     function onClickTest()          { window.globals.testCanvas(); }
-    // function onChangeAlgorithm()    { window.globals.changeAlgorithm(); }
     
     function onChangeAlgorithm()    {
         
-        // get algorithm value and test button
+        // get current algorithm value
         let algorithmValue = document.getElementById("algorithmSelect").value;
+
+        //
         let testButton = document.getElementById("testButton");
+        if (algorithmValue === "divider") { testButton.disabled = true; }
+        else { testButton.disabled = false; }
 
-        // set test button state
-        testButton.disabled = algorithmValue === "divider" ? true : false;
+        // case: translate
+        if (algorithmValue === "translate") {
+
+            document.getElementById("translateArea").style.display = "inline";
+            document.getElementById("translateX").value = "0";
+            document.getElementById("translateY").value = "0";
+        }
+
+        // case: no algorithm with attributes
+        else {
+
+            let elements = document.getElementsByClassName("attributes");
+            for (let element of elements) { element.style.display = "none"; }
+        }
     }
-
 });
 
