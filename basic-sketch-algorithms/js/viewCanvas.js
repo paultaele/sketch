@@ -188,8 +188,6 @@ function runScaleSquare(sketch, pixels) {
 
     let newSketch = SketchRecTools.scaleSquare(sketch, pixels);
     drawStrokes(newSketch, COLOR_RED);
-
-    console.log(newSketch);
 }
 
 function runCornersShortStraw(sketch) {
@@ -840,13 +838,14 @@ let IStraw = {
     run: function(sketch) {
       var strokes = sketch.strokes;
       var sketchCorners = [];
+
       for (var i = 0; i < strokes.length; i++) {
-        var points = strokes[i].points;
+
+        var points = strokes[i].points;        
         var strokeCorners = this.main(points);
-  
         sketchCorners.push(strokeCorners);
       }
-  
+
       return sketchCorners;
     },
   
@@ -856,7 +855,7 @@ let IStraw = {
      * @return {number[]} The resampled corner indices.
      */
     main: function(points) {
-  
+
       // get the corners (line 3)
       var corners = this.getCorners(points);
   
@@ -869,14 +868,20 @@ let IStraw = {
      * @return {number[]} The corner indices.
      */
     getCorners: function(points) {
+
       // initialize array of corner indices (line 1)
       var corners = [];
   
       // add the 0-index to the corner indices (line 2)
       corners.push(0);
   
-      // handle singleton-stroke case
+      // handle singleton-stroke and low point-count stroke cases
+      const MIN_NUM_POINTS = 6;
       if (points.length === 1) { return corners; }
+      if (points.length < MIN_NUM_POINTS) {
+        corners.push(points.length - 1);
+        return corners;
+      }
   
       // set the window length (line 3)
       var W = 3;
@@ -889,12 +894,12 @@ let IStraw = {
       straws[2] = this.distance(points[0], points[2 + W]) * ((2 * W) / (2 + W));
       straws[points.length - 2] = ((2 * W) / (1 + W)) * this.distance(points[points.length - 1], points[points.length - 2 - W]);
       straws[points.length - 3] = ((2 * W) / (2 + W)) * this.distance(points[points.length - 1], points[points.length - 3 - W]);
-  
+
       // set the straw distances for the points inside the window (line 8, 9)
       for (var i = W; i < points.length - W; i++) {
         straws[i] = this.distance(points[i - W], points[i + W]);
       }
-  
+
       corners = this.initCorners(points, corners, straws, W);
       corners = this.polylineProc(points, corners, straws);
       corners = this.curveProcessPass1(points, corners);
