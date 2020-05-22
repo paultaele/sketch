@@ -27,6 +27,16 @@ globals.runAlgorithm = (sketch, algorithmValue) => {
         let pixels = Number.parseInt(document.getElementById("resampleDistance").value);
         runResampleDistance(sketch, pixels);
     }
+    else if (algorithmValue === "scaleProportional")    {
+
+        let pixels = Number.parseInt(document.getElementById("scaleProportional").value);
+        runScaleProportional(sketch, pixels);
+    }
+    else if (algorithmValue === "scaleSquare")    {
+
+        let pixels = Number.parseInt(document.getElementById("scaleSquare").value);
+        runScaleSquare(sketch, pixels);
+    }
 }
 
 function runEndpoints(sketch) {
@@ -164,6 +174,20 @@ function runResampleDistance(sketch, pixels) {
         let dot = new Path.Circle(new Point(point.x, point.y), DOT_SIZE);
         dot.fillColor = 'red';
     }
+}
+
+function runScaleProportional(sketch, pixels) {
+
+    let newSketch = SketchRecTools.scaleProportional(sketch, pixels);
+    drawStrokes(newSketch, COLOR_RED);
+}
+
+function runScaleSquare(sketch, pixels) {
+
+    let newSketch = SketchRecTools.scaleSquare(sketch, pixels);
+    drawStrokes(newSketch, COLOR_RED);
+
+    console.log(newSketch);
 }
 
 

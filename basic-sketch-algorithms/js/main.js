@@ -52,5 +52,19 @@ window.addEventListener("load", () => {
             document.getElementById("resampleDistanceArea").style.display = "inline";
             document.getElementById("resampleDistance").value = "100";
         }
+
+        // case: scale (proportional)
+        else if (algorithmValue === "scaleProportional") {
+
+            document.getElementById("scaleProportionalArea").style.display = "inline";
+            document.getElementById("scaleProportional").value = "100";
+        }
+
+        // case: scale (square)
+        else if (algorithmValue === "scaleSquare") {
+
+            document.getElementById("scaleSquareArea").style.display = "inline";
+            document.getElementById("scaleSquare").value = "100";
+        }
     }
 });
