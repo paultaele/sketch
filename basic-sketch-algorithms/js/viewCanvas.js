@@ -246,8 +246,6 @@ function runCornersIStraw(sketch) {
     }
 }
 
-
-
 function drawStrokes(sketch, color) {
 
     // clear all strokes from canvas
@@ -648,7 +646,6 @@ let SketchRecTools = {
       return newSketch;
     },
 }; // end
-
 
 let ShortStraw = {
     run: function(sketch) {
