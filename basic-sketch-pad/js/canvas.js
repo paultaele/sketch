@@ -33,7 +33,7 @@ function onMouseUp(event) {
     // - add times to timespan
     times.push(Date.now());
     timespan.push(times);
-    
+
     // handle case when dot is drawn
     let distance = 0;
     for (let i = 1; i < stroke.segments.length; ++i) {
@@ -243,6 +243,6 @@ const PATH_STYLE = {
     strokeWidth: 4,
     strokeColor: '#000000'
 };
-const MAX_DOT_DISTANCE = 4.0;
+const MAX_DOT_DISTANCE = 4;
 const EMPTY_VALUE = "";
 const DEFAULT_CONFIDENCE = "1.0";

@@ -229,5 +229,4 @@ const PATH_STYLE = {
     strokeWidth: 4,
     strokeColor: COLOR_GREY
 };
-const MAX_DOT_DISTANCE = 4.0;
 const STROKE_CHECKBOX_GROUP = "strokeCheckboxGroup";
